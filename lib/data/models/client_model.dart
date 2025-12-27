@@ -1,5 +1,4 @@
 import '../../domain/entities/client.dart';
-import '../../../core/constants/firebase_constants.dart';
 
 class ClientModel extends Client {
   ClientModel({
@@ -35,35 +34,35 @@ class ClientModel extends Client {
   factory ClientModel.fromJson(Map<String, dynamic> json, String documentId) {
     return ClientModel(
       id: documentId,
-      userId: json[FirebaseConstants.userIdField] ?? '',
-      clientName: json[FirebaseConstants.clientNameField] ?? '',
-      phoneNumber: json[FirebaseConstants.phoneNumberField] ?? '',
-      companyName: json[FirebaseConstants.companyNameField],
-      businessType: json[FirebaseConstants.businessTypeField] ?? '',
-      usingSystem: json[FirebaseConstants.usingSystemField] ?? false,
-      customerPotential: json[FirebaseConstants.customerPotentialField] ?? '',
-      latitude: (json[FirebaseConstants.latitudeField] ?? 0.0).toDouble(),
-      longitude: (json[FirebaseConstants.longitudeField] ?? 0.0).toDouble(),
-      address: json[FirebaseConstants.addressField],
-      createdAt: json[FirebaseConstants.createdAtField]?.toDate() ?? DateTime.now(),
-      updatedAt: json[FirebaseConstants.updatedAtField]?.toDate() ?? DateTime.now(),
+      userId: json['userId'] ?? '',
+      clientName: json['clientName'] ?? '',
+      phoneNumber: json['phoneNumber'] ?? '',
+      companyName: json['companyName'],
+      businessType: json['businessType'] ?? '',
+      usingSystem: json['usingSystem'] ?? false,
+      customerPotential: json['customerPotential'] ?? '',
+      latitude: (json['latitude'] ?? 0.0).toDouble(),
+      longitude: (json['longitude'] ?? 0.0).toDouble(),
+      address: json['address'],
+      createdAt: json['createdAt']?.toDate() ?? DateTime.now(),
+      updatedAt: json['updatedAt']?.toDate() ?? DateTime.now(),
     );
   }
   
   Map<String, dynamic> toJson() {
     return {
-      FirebaseConstants.userIdField: userId,
-      FirebaseConstants.clientNameField: clientName,
-      FirebaseConstants.phoneNumberField: phoneNumber,
-      if (companyName != null) FirebaseConstants.companyNameField: companyName,
-      FirebaseConstants.businessTypeField: businessType,
-      FirebaseConstants.usingSystemField: usingSystem,
-      FirebaseConstants.customerPotentialField: customerPotential,
-      FirebaseConstants.latitudeField: latitude,
-      FirebaseConstants.longitudeField: longitude,
-      if (address != null) FirebaseConstants.addressField: address,
-      FirebaseConstants.createdAtField: createdAt,
-      FirebaseConstants.updatedAtField: updatedAt,
+      'userId': userId,
+      'clientName': clientName,
+      'phoneNumber': phoneNumber,
+      if (companyName != null) 'companyName': companyName,
+      'businessType': businessType,
+      'usingSystem': usingSystem,
+      'customerPotential': customerPotential,
+      'latitude': latitude,
+      'longitude': longitude,
+      if (address != null) 'address': address,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
     };
   }
   

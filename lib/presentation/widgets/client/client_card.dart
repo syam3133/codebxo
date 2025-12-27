@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import '../../domain/entities/client.dart';
+import 'package:flutter/material.dart' hide DateUtils;
+import '../../../domain/entities/client.dart';
 import '../../../core/utils/date_utils.dart';
 
 class ClientCard extends StatelessWidget {
@@ -82,7 +82,7 @@ class ClientCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        DateUtils.getRelativeTime(client.updatedAt),
+                        AppDateUtils.getRelativeTime(client.updatedAt),
                         style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 12,

@@ -1,5 +1,4 @@
 import '../../domain/entities/interaction.dart';
-import '../../../core/constants/firebase_constants.dart';
 
 class InteractionModel extends Interaction {
   InteractionModel({
@@ -24,22 +23,22 @@ class InteractionModel extends Interaction {
     return InteractionModel(
       id: documentId,
       clientId: json['clientId'] ?? '',
-      interactionType: json[FirebaseConstants.interactionTypeField] ?? '',
-      notes: json[FirebaseConstants.notesField],
-      clientReply: json[FirebaseConstants.clientReplyField],
-      followUpDate: json[FirebaseConstants.followUpDateField]?.toDate(),
-      createdAt: json[FirebaseConstants.createdAtField]?.toDate() ?? DateTime.now(),
+      interactionType: json['interactionType'] ?? '',
+      notes: json['notes'],
+      clientReply: json['clientReply'],
+      followUpDate: json['followUpDate']?.toDate(),
+      createdAt: json['createdAt']?.toDate() ?? DateTime.now(),
     );
   }
   
   Map<String, dynamic> toJson() {
     return {
       'clientId': clientId,
-      FirebaseConstants.interactionTypeField: interactionType,
-      if (notes != null) FirebaseConstants.notesField: notes,
-      if (clientReply != null) FirebaseConstants.clientReplyField: clientReply,
-      if (followUpDate != null) FirebaseConstants.followUpDateField: followUpDate,
-      FirebaseConstants.createdAtField: createdAt,
+      'interactionType': interactionType,
+      if (notes != null) 'notes': notes,
+      if (clientReply != null) 'clientReply': clientReply,
+      if (followUpDate != null) 'followUpDate': followUpDate,
+      'createdAt': createdAt,
     };
   }
   

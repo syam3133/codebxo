@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../providers/auth_provider.dart';
+import '../providers/auth_provider.dart';
 import '../widgets/common/loading_widget.dart';
-import '../screens/auth/login_screen.dart';
-import '../screens/client/client_list_screen.dart';
+import 'auth/login_screen.dart';
+import 'client/client_list_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,9 +20,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   
   Future<void> _initializeApp() async {
-    // Initialize Firebase
-    // await FirebaseService.initialize();
-    
     // Check if user is logged in
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     await authProvider.getCurrentUser();

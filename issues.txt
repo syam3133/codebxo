@@ -1,0 +1,283 @@
+[{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/injection.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "invocation_of_non_function",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/invocation_of_non_function",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "'AuthProvider' isn't a function.\nTry correcting the name to match an existing function, or define a method or function named 'AuthProvider'.",
+	"source": "dart",
+	"startLineNumber": 114,
+	"startColumn": 28,
+	"endLineNumber": 114,
+	"endColumn": 40,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/injection.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "ambiguous_import",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/ambiguous_import",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The name 'AuthProvider' is defined in the libraries 'package:field_sales_crm/presentation/providers/auth_provider.dart' and 'package:firebase_auth_platform_interface/src/auth_provider.dart'.\nTry using 'as prefix' for one of the import directives, or hiding the name from all but one of the imports.",
+	"source": "dart",
+	"startLineNumber": 114,
+	"startColumn": 28,
+	"endLineNumber": 114,
+	"endColumn": 40,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/injection.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "depend_on_referenced_packages",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/depend_on_referenced_packages",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 2,
+	"message": "The imported package 'firebase_auth_platform_interface' isn't a dependency of the importing package.\nTry adding a dependency for 'firebase_auth_platform_interface' in the 'pubspec.yaml' file.",
+	"source": "dart",
+	"startLineNumber": 36,
+	"startColumn": 8,
+	"endLineNumber": 36,
+	"endColumn": 73,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/injection.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "implementation_imports",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/implementation_imports",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 2,
+	"message": "Import of a library in the 'lib/src' directory of another package.\nTry importing a public library that exports this library, or removing the import.",
+	"source": "dart",
+	"startLineNumber": 36,
+	"startColumn": 8,
+	"endLineNumber": 36,
+	"endColumn": 73,
+	"origin": "extHost1"
+}]
+
+[{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "uri_does_not_exist",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/uri_does_not_exist",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "Target of URI doesn't exist: '../interaction/add_interaction_screen.dart'.\nTry creating the file referenced by the URI, or try using a URI for a file that does exist.",
+	"source": "dart",
+	"startLineNumber": 12,
+	"startColumn": 8,
+	"endLineNumber": 12,
+	"endColumn": 52,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "undefined_method",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/undefined_method",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The method 'getClientById' isn't defined for the type 'ClientProvider'.\nTry correcting the name to the name of an existing method, or defining a method named 'getClientById'.",
+	"source": "dart",
+	"startLineNumber": 38,
+	"startColumn": 41,
+	"endLineNumber": 38,
+	"endColumn": 54,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "undefined_method",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/undefined_method",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The method 'formatDate' isn't defined for the type 'DateUtils'.\nTry correcting the name to the name of an existing method, or defining a method named 'formatDate'.",
+	"source": "dart",
+	"startLineNumber": 194,
+	"startColumn": 58,
+	"endLineNumber": 194,
+	"endColumn": 68,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "undefined_method",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/undefined_method",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The method 'AddInteractionScreen' isn't defined for the type '_ClientDetailScreenState'.\nTry correcting the name to the name of an existing method, or defining a method named 'AddInteractionScreen'.",
+	"source": "dart",
+	"startLineNumber": 216,
+	"startColumn": 53,
+	"endLineNumber": 216,
+	"endColumn": 73,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "undefined_method",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/undefined_method",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The method 'getRelativeTime' isn't defined for the type 'DateUtils'.\nTry correcting the name to the name of an existing method, or defining a method named 'getRelativeTime'.",
+	"source": "dart",
+	"startLineNumber": 274,
+	"startColumn": 51,
+	"endLineNumber": 274,
+	"endColumn": 66,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "undefined_method",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/undefined_method",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 8,
+	"message": "The method 'formatDate' isn't defined for the type 'DateUtils'.\nTry correcting the name to the name of an existing method, or defining a method named 'formatDate'.",
+	"source": "dart",
+	"startLineNumber": 301,
+	"startColumn": 67,
+	"endLineNumber": 301,
+	"endColumn": 77,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "unused_import",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/unused_import",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 4,
+	"message": "Unused import: '../../../domain/entities/interaction.dart'.\nTry removing the import directive.",
+	"source": "dart",
+	"startLineNumber": 7,
+	"startColumn": 8,
+	"endLineNumber": 7,
+	"endColumn": 51,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "unused_import",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/unused_import",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 4,
+	"message": "Unused import: '../../../core/constants/app_constants.dart'.\nTry removing the import directive.",
+	"source": "dart",
+	"startLineNumber": 8,
+	"startColumn": 8,
+	"endLineNumber": 8,
+	"endColumn": 52,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "use_build_context_synchronously",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/use_build_context_synchronously",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 2,
+	"message": "Don't use 'BuildContext's across async gaps.\nTry rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check.",
+	"source": "dart",
+	"startLineNumber": 62,
+	"startColumn": 28,
+	"endLineNumber": 62,
+	"endColumn": 35,
+	"origin": "extHost1"
+},{
+	"resource": "/Users/apple/MYWORKS/codebxopjt/lib/presentation/screens/client/client_detail_screen.dart",
+	"owner": "_generated_diagnostic_collection_name_#1",
+	"code": {
+		"value": "use_build_context_synchronously",
+		"target": {
+			"$mid": 1,
+			"path": "/diagnostics/use_build_context_synchronously",
+			"scheme": "https",
+			"authority": "dart.dev"
+		}
+	},
+	"severity": 2,
+	"message": "Don't use 'BuildContext's across async gaps.\nTry rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check.",
+	"source": "dart",
+	"startLineNumber": 78,
+	"startColumn": 28,
+	"endLineNumber": 78,
+	"endColumn": 35,
+	"origin": "extHost1"
+}]

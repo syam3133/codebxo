@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import '../../repositories/auth_repository.dart';
 import '../../../core/errors/failures.dart';
 import '../usecase.dart';
+import '../../entities/user.dart';
 
 class SignInUseCase implements UseCase<User, SignInParams> {
   final AuthRepository repository;

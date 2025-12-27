@@ -1,7 +1,5 @@
-import 'package:field_sales_crm/core/utils/date_utils.dart';
 import 'package:field_sales_crm/domain/entities/interaction.dart';
-import 'package:flutter/material.dart' hide DateUtils;
-
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/interaction_provider.dart';
 import '../../../core/constants/app_constants.dart';
@@ -9,7 +7,6 @@ import '../../widgets/common/custom_button.dart';
 import '../../widgets/common/custom_text_field.dart';
 import '../../widgets/common/loading_widget.dart';
 import '../../widgets/common/message_widget.dart';
-import '../../../core/utils/date_utils.dart';
 
 class AddInteractionScreen extends StatefulWidget {
   final String clientId;
@@ -58,7 +55,7 @@ class _AddInteractionScreenState extends State<AddInteractionScreen> {
       final interactionProvider = Provider.of<InteractionProvider>(context, listen: false);
       
       final interaction = Interaction(
-        id: '', // Will be set by the repository
+        id: '', // Will be set by repository
         clientId: widget.clientId,
         interactionType: _interactionType,
         notes: _notesController.text.trim().isEmpty
@@ -135,7 +132,7 @@ class _AddInteractionScreenState extends State<AddInteractionScreen> {
                       ),
                       child: Text(
                         _followUpDate != null
-                            ? AppDateUtils.formatDate(_followUpDate!)
+                            ? '${_followUpDate!.day}-${_followUpDate!.month}-${_followUpDate!.year}'
                             : 'Select follow-up date',
                       ),
                     ),

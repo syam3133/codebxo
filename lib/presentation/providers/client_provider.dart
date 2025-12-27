@@ -144,6 +144,33 @@ class ClientProvider with ChangeNotifier {
       }).toList();
     }
   }
+
+  Future<Client?> getClientById(String clientId) async {
+  try {
+    // Find the client in the local list
+    final client = _clients.firstWhere(
+      (c) => c.id == clientId,
+      orElse: () => Client(
+        id: '',
+        userId: '',
+        clientName: '',
+        phoneNumber: '',
+        businessType: '',
+        usingSystem: false,
+        customerPotential: '',
+        latitude: 0.0,
+        longitude: 0.0,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ),
+    );
+    
+    return client.id.isNotEmpty ? client : null;
+  } catch (e) {
+    _setError('Failed to get client: $e');
+    return null;
+  }
+}
   
   void _setLoading(bool loading) {
     _isLoading = loading;

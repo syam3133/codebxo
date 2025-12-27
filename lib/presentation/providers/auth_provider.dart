@@ -5,6 +5,7 @@ import '../../domain/usecases/auth/sign_up_usecase.dart';
 import '../../domain/usecases/auth/sign_out_usecase.dart';
 import '../../domain/usecases/auth/get_current_user_usecase.dart';
 import '../../core/errors/failures.dart';
+import '../../domain/usecases/usecase.dart'; // ADD THIS IMPORT
 
 class AuthProvider with ChangeNotifier {
   final SignInUseCase signInUseCase;
@@ -66,7 +67,7 @@ class AuthProvider with ChangeNotifier {
     _setLoading(true);
     _clearError();
     
-    final result = await signOutUseCase(const NoParams());
+    final result = await signOutUseCase( NoParams()); // USE NoParams CLASS
     
     result.fold(
       (failure) => _setError(failure.message),
@@ -83,11 +84,11 @@ class AuthProvider with ChangeNotifier {
     _setLoading(true);
     _clearError();
     
-    final result = await getCurrentUserUseCase(const NoParams());
+    final result = await getCurrentUserUseCase( NoParams()); // USE NoParams CLASS
     
     result.fold(
       (failure) => _setError(failure.message),
-      (user) {
+      (user) { // NO CHANGE NEEDED HERE, the Either type handles nullable User
         _user = user;
         notifyListeners();
       },

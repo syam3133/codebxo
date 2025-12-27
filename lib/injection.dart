@@ -1,11 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:geolocator/geolocator.dart';
 
 import 'core/network/network_info.dart';
-import 'core/services/location_service.dart';
 import 'data/datasources/auth_remote_datasource.dart';
 import 'data/datasources/client_remote_datasource.dart';
 import 'data/datasources/interaction_remote_datasource.dart';
@@ -32,6 +31,9 @@ import 'presentation/providers/auth_provider.dart';
 import 'presentation/providers/client_provider.dart';
 import 'presentation/providers/interaction_provider.dart';
 
+// Remove this problematic import
+// import 'package:firebase_auth_platform_interface/src/auth_provider.dart' as firebase_auth_platform;
+
 final sl = GetIt.instance;
 
 Future<void> init() async {
@@ -43,7 +45,6 @@ Future<void> init() async {
   
   // Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
-  sl.registerLazySingleton(() => LocationService());
   
   // Data sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -107,7 +108,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateInteractionUseCase(sl()));
   sl.registerLazySingleton(() => DeleteInteractionUseCase(sl()));
   
-  // Providers
+  // Providers - FIX THE AUTH PROVIDER REGISTRATION
   sl.registerFactory(() => AuthProvider(
     signInUseCase: sl(),
     signUpUseCase: sl(),

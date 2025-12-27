@@ -39,7 +39,7 @@ class ClientRemoteDataSourceImpl implements ClientRemoteDataSource {
   Future<ClientModel> getClientById(String clientId) async {
     try {
       // We need to find which user owns this client
-      // In a real app, you might store the userId in the client document
+      // In a real app, you might store userId in the client document
       // For simplicity, we'll assume the current user is the owner
       
       final snapshot = await firestore

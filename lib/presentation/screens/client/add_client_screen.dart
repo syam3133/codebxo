@@ -1,14 +1,15 @@
+import 'package:field_sales_crm/domain/entities/client.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/client_provider.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/services/location_service.dart';
-import '../widgets/common/custom_button.dart';
-import '../widgets/common/custom_text_field.dart';
-import '../widgets/common/loading_widget.dart';
-import '../widgets/common/message_widget.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/services/location_service.dart';
+import '../../widgets/common/custom_button.dart';
+import '../../widgets/common/custom_text_field.dart';
+import '../../widgets/common/loading_widget.dart';
+import '../../widgets/common/message_widget.dart';
 
 class AddClientScreen extends StatefulWidget {
   const AddClientScreen({Key? key}) : super(key: key);

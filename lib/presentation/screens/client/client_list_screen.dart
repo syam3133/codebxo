@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/client_provider.dart';
-import '../widgets/client/client_card.dart';
-import '../widgets/common/loading_widget.dart';
-import '../widgets/common/message_widget.dart';
+import '../../widgets/client/client_card.dart';
+import '../../widgets/common/loading_widget.dart';
+import '../../widgets/common/message_widget.dart';
 import 'add_client_screen.dart';
 import 'client_detail_screen.dart';
 

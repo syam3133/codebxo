@@ -3,13 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/client_provider.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/services/location_service.dart';
-import '../../domain/entities/client.dart';
-import '../widgets/common/custom_button.dart';
-import '../widgets/common/custom_text_field.dart';
-import '../widgets/common/loading_widget.dart';
-import '../widgets/common/message_widget.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/services/location_service.dart';
+import '../../../domain/entities/client.dart';
+import '../../widgets/common/custom_button.dart';
+import '../../widgets/common/custom_text_field.dart';
+import '../../widgets/common/loading_widget.dart';
+import '../../widgets/common/message_widget.dart';
 
 class EditClientScreen extends StatefulWidget {
   final Client client;

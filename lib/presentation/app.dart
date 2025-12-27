@@ -1,10 +1,13 @@
+import 'package:field_sales_crm/presentation/screens/auth/login_screen.dart';
+import 'package:field_sales_crm/presentation/screens/auth/signup_screen.dart';
+import 'package:field_sales_crm/presentation/screens/client/client_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/auth_provider.dart';
-import '../providers/client_provider.dart';
-import '../providers/interaction_provider.dart';
-import '../injection.dart';
-import '../screens/splash_screen.dart';
+import 'providers/auth_provider.dart';
+import 'providers/client_provider.dart';
+import 'providers/interaction_provider.dart';
+import '../injection.dart' as di;
+import 'screens/splash_screen.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -13,9 +16,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => sl<AuthProvider>()),
-        ChangeNotifierProvider(create: (_) => sl<ClientProvider>()),
-        ChangeNotifierProvider(create: (_) => sl<InteractionProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<AuthProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<ClientProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<InteractionProvider>()),
       ],
       child: MaterialApp(
         title: 'Field Sales CRM',

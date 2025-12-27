@@ -1,16 +1,111 @@
-# a
+Field Sales CRM
+A Flutter-based Field Sales CRM application that helps sales teams manage clients, track interactions, and stay organized on the go.
 
-A new Flutter project.
+Features
+User authentication (sign up, sign in, sign out)
+Client management (add, edit, delete, view)
+GPS location capture for clients
+Call and SMS integration
+Interaction tracking
+Search functionality
+Responsive design for mobile and web
+Technology Stack
+Frontend: Flutter
+Backend: Firebase (Authentication, Firestore)
+Architecture: MVVM / Clean Architecture
+State Management: Provider
+Local Storage: Hive (for offline support)
+Location: Geolocator
+Permissions: Permission Handler
+Setup Instructions
+Prerequisites
+Flutter SDK (>=3.10.0)
+Dart SDK (>=3.0.0)
+Firebase account
+Android Studio / VS Code with Flutter extensions
+Firebase Setup
+Create a new Firebase project at Firebase Console
+Enable Authentication (Email/Password)
+Set up Firestore Database
+Add your Flutter app to the Firebase project
+Download the configuration files:
+For Android: google-services.json → place in android/app/
+For iOS: GoogleService-Info.plist → place in ios/Runner/
+Running the App
+Clone this repository
+Run flutter pub get to install dependencies
+Run flutter packages pub run build_runner build to generate code
+Connect a device or start an emulator
+Run flutter run
+Architecture
+This app follows Clean Architecture principles with clear separation of concerns:
 
-## Getting Started
+Presentation Layer: UI components, screens, and state management
+Domain Layer: Business logic, entities, use cases, and repository interfaces
+Data Layer: Repository implementations, data sources, and models
+Database Schema
+Users Collection
+users
+└── userId
+├── id: string
+├── email: string
+├── name: string
+└── createdAt: timestamp
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Clients Collection
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+users
+└── userId
+└── clients
+└── clientId
+├── userId: string
+├── clientName: string
+├── phoneNumber: string
+├── companyName: string
+├── businessType: string
+├── usingSystem: boolean
+├── customerPotential: string
+├── latitude: number
+├── longitude: number
+├── address: string
+├── createdAt: timestamp
+└── updatedAt: timestamp
+
+
+
+### Interactions Collection
+
+users
+└── userId
+└── clients
+└── clientId
+└── interactions
+└── interactionId
+├── clientId: string
+├── interactionType: string
+├── notes: string
+├── clientReply: string
+├── followUpDate: timestamp
+└── createdAt: timestamp
+
+
+
+## Build Instructions
+
+### Android
+
+```bash
+flutter build apk --release
+iOS
+bash
+
+flutter build ios --release
+Web
+bash
+
+flutter build web --release
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.

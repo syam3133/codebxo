@@ -5,6 +5,7 @@ import '../../core/errors/failures.dart';
 import '../../core/errors/exceptions.dart';
 import '../../core/network/network_info.dart';
 import '../datasources/auth_remote_datasource.dart';
+import '../models/user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
@@ -71,7 +72,7 @@ class AuthRepositoryImpl implements AuthRepository {
         if (user != null) {
           return Right(user);
         } else {
-          return const Left(ServerFailure('No user logged in'));
+          return  Left(ServerFailure('No user logged in'));
         }
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));

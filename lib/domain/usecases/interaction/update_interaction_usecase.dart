@@ -4,13 +4,13 @@ import '../../repositories/interaction_repository.dart';
 import '../../../core/errors/failures.dart';
 import '../usecase.dart';
 
-class GetInteractionListUseCase implements UseCase<List<Interaction>, String> {
+class UpdateInteractionUseCase implements UseCase<Interaction, Interaction> {
   final InteractionRepository repository;
   
-  GetInteractionListUseCase(this.repository);
+  UpdateInteractionUseCase(this.repository);
   
   @override
-  Future<Either<Failure, List<Interaction>>> call(String clientId) async {
-    return await repository.getInteractionList(clientId);
+  Future<Either<Failure, Interaction>> call(Interaction interaction) async {
+    return await repository.updateInteraction(interaction);
   }
 }

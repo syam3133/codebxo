@@ -1,15 +1,19 @@
+import 'package:field_sales_crm/presentation/widgets/common/loading_widget.dart';
+import 'package:field_sales_crm/presentation/widgets/common/message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../providers/client_provider.dart';
 import '../../providers/interaction_provider.dart';
-import '../../domain/entities/client.dart';
-import '../../domain/entities/interaction.dart';
-import '../../core/constants/app_constants.dart';
-import '../widgets/common/loading_widget.dart';
-import '../widgets/common/message_widget.dart';
+import '../../../domain/entities/client.dart';
+import '../../../domain/entities/interaction.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/utils/date_utils.dart';
+import '../../widgets/common/loading_widget.dart';
+import '../../widgets/common/message_widget.dart';
 import 'edit_client_screen.dart';
 import '../interaction/add_interaction_screen.dart';
+
 
 class ClientDetailScreen extends StatefulWidget {
   final String clientId;
@@ -35,16 +39,13 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
   
   Future<void> _loadClient() async {
     final clientProvider = Provider.of<ClientProvider>(context, listen: false);
-    final result = await clientProvider.getClientById(widget.clientId);
+    final client = await clientProvider.getClientById(widget.clientId);
     
-    result.fold(
-      (failure) => null,
-      (client) {
-        setState(() {
-          _client = client;
-        });
-      },
-    );
+    if (client != null) {
+      setState(() {
+        _client = client;
+      });
+    }
   }
   
   Future<void> _loadInteractions() async {
@@ -59,12 +60,14 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
     );
     
     if (!await launchUrl(launchUri)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Could not launch $phoneNumber'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Could not launch $phoneNumber'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
   
@@ -75,12 +78,14 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
     );
     
     if (!await launchUrl(launchUri)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Could not send SMS to $phoneNumber'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Could not send SMS to $phoneNumber'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
   
@@ -191,7 +196,7 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
                             children: [
                               const Icon(Icons.access_time),
                               const SizedBox(width: 8),
-                              Text('Created: ${DateUtils.formatDate(_client!.createdAt)}'),
+                              Text('Created: ${AppDateUtils.formatDate(_client!.createdAt)}'),
                             ],
                           ),
                         ],
@@ -271,7 +276,7 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
                                       ),
                                       const Spacer(),
                                       Text(
-                                        DateUtils.getRelativeTime(interaction.createdAt),
+                                        AppDateUtils.getRelativeTime(interaction.createdAt),
                                         style: const TextStyle(
                                           color: Colors.grey,
                                           fontSize: 12,
@@ -298,7 +303,7 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
                                         const Icon(Icons.event),
                                         const SizedBox(width: 8),
                                         Text(
-                                          'Follow-up: ${DateUtils.formatDate(interaction.followUpDate!)}',
+                                          'Follow-up: ${AppDateUtils.formatDate(interaction.followUpDate!)}',
                                         ),
                                       ],
                                     ),
