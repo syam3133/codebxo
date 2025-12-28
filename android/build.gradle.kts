@@ -22,3 +22,19 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+subprojects {
+    plugins.withId("com.android.application") {
+        extensions.configure<com.android.build.gradle.AppExtension>("android") {
+            buildFeatures.buildConfig = true
+        }
+    }
+
+    plugins.withId("com.android.library") {
+        extensions.configure<com.android.build.gradle.LibraryExtension>("android") {
+            buildFeatures.buildConfig = true
+        }
+    }
+}
+
+

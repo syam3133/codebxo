@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "209994691854",
+    "project_id": "codebxo",
+    "storage_bucket": "codebxo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209994691854:android:5143e2c241bdd17a12935f",
+        "android_client_info": {
+          "package_name": "com.testcodebxo.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf2msV_dDECkkl5oc-E6FwyJAiu-Zi3dQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

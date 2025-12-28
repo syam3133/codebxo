@@ -13,7 +13,7 @@ class UserModel extends User {
     createdAt: createdAt,
   );
   
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(Map<String, dynamic> json, String id) {
     return UserModel(
       id: json['id'] ?? '',
       email: json['email'] ?? '',
