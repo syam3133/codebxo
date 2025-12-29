@@ -72,10 +72,7 @@ class MessageWidget extends StatelessWidget {
           ),
           if (onDismiss != null)
             IconButton(
-              icon: Icon(
-                Icons.close,
-                color: textColor,
-              ),
+              icon: Icon(Icons.close, color: textColor),
               onPressed: onDismiss,
             ),
         ],

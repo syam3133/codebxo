@@ -132,6 +132,21 @@ class ClientProvider with ChangeNotifier {
     _setLoading(false);
   }
   
+// Add this method to getClientById if it doesn't exist in the local list:
+Future<Client?> getClientById(String clientId) async {
+  // First check if it's in our local list
+  try {
+    final client = _clients.firstWhere(
+      (c) => c.id == clientId,
+      orElse: () => throw Exception('Client not found'),
+    );
+    return client;
+  } catch (e) {
+    // If not found locally, return null
+    return null;
+  }
+}
+  
   void _applyFilter() {
     if (_searchQuery.isEmpty) {
       _filteredClients = List.from(_clients);
@@ -144,33 +159,6 @@ class ClientProvider with ChangeNotifier {
       }).toList();
     }
   }
-
-  Future<Client?> getClientById(String clientId) async {
-  try {
-    // Find the client in the local list
-    final client = _clients.firstWhere(
-      (c) => c.id == clientId,
-      orElse: () => Client(
-        id: '',
-        userId: '',
-        clientName: '',
-        phoneNumber: '',
-        businessType: '',
-        usingSystem: false,
-        customerPotential: '',
-        latitude: 0.0,
-        longitude: 0.0,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      ),
-    );
-    
-    return client.id.isNotEmpty ? client : null;
-  } catch (e) {
-    _setError('Failed to get client: $e');
-    return null;
-  }
-}
   
   void _setLoading(bool loading) {
     _isLoading = loading;

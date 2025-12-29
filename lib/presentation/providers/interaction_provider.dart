@@ -45,22 +45,22 @@ class InteractionProvider with ChangeNotifier {
   }
   
   Future<void> addInteraction(Interaction interaction) async {
-    _setLoading(true);
-    _clearError();
-    
-    final result = await addInteractionUseCase(interaction);
-    
-    result.fold(
-      (failure) => _setError(failure.message),
-      (addedInteraction) {
-        _interactions.insert(0, addedInteraction);
-        notifyListeners();
-      },
-    );
-    
-    _setLoading(false);
-  }
+  _setLoading(true);
+  _clearError();
   
+  final result = await addInteractionUseCase(interaction);
+  
+  result.fold(
+    (failure) => _setError(failure.message),
+    (addedInteraction) {
+      _interactions.insert(0, addedInteraction);
+      _showSuccessMessage('Interaction added successfully');
+      notifyListeners();
+    },
+  );
+  
+  _setLoading(false);
+}
   Future<void> updateInteraction(Interaction interaction) async {
     _setLoading(true);
     _clearError();
@@ -81,22 +81,30 @@ class InteractionProvider with ChangeNotifier {
     _setLoading(false);
   }
   
-  Future<void> deleteInteraction(String interactionId) async {
-    _setLoading(true);
-    _clearError();
-    
-    final result = await deleteInteractionUseCase(interactionId);
-    
-    result.fold(
-      (failure) => _setError(failure.message),
-      (_) {
-        _interactions.removeWhere((i) => i.id == interactionId);
-        notifyListeners();
-      },
-    );
-    
-    _setLoading(false);
-  }
+Future<void> deleteInteraction(String interactionId) async {
+  // Remove from local list
+  _interactions.removeWhere((i) => i.id == interactionId);
+  
+  // Also call the repository method
+  final result = await deleteInteractionUseCase(interactionId);
+  
+  result.fold(
+    (failure) => _setError(failure.message),
+    (_) {
+      // Remove from local list
+      _interactions.removeWhere((i) => i.id == interactionId);
+      notifyListeners();
+    },
+  );
+  
+  _setLoading(false);
+}
+
+  void _showSuccessMessage(String message) {
+  // You can use a callback or a global key to show messages
+  // For now, we'll just print it
+  print('Success: $message');
+}
   
   void _setLoading(bool loading) {
     _isLoading = loading;

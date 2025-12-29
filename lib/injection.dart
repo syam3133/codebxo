@@ -62,7 +62,7 @@ Future<void> init() async {
   
   sl.registerLazySingleton<InteractionRemoteDataSource>(
     () => InteractionRemoteDataSourceImpl(
-      firestore: sl(),
+      firestore: sl(), auth: sl(),
     ),
   );
   

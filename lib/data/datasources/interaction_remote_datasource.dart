@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/interaction_model.dart';
 import '../../../core/errors/exceptions.dart';
 import '../../../core/constants/firebase_constants.dart';
@@ -12,46 +13,63 @@ abstract class InteractionRemoteDataSource {
 
 class InteractionRemoteDataSourceImpl implements InteractionRemoteDataSource {
   final FirebaseFirestore firestore;
+  final FirebaseAuth auth;
   
-  InteractionRemoteDataSourceImpl({required this.firestore});
+  InteractionRemoteDataSourceImpl({
+    required this.firestore,
+    required this.auth,
+  });
   
   @override
   Future<List<InteractionModel>> getInteractionList(String clientId) async {
     try {
-      final snapshot = await firestore
-          .collectionGroup(FirebaseConstants.interactionsCollection)
-          .where('clientId', isEqualTo: clientId)
+      // First get the current user
+      final currentUser = auth.currentUser;
+      if (currentUser == null) {
+        throw ServerException('User not authenticated');
+      }
+      
+      // Get the user's clients to find the one with matching clientId
+      final clientsSnapshot = await firestore
+          .collection(FirebaseConstants.usersCollection)
+          .doc(currentUser.uid)
+          .collection(FirebaseConstants.clientsCollection)
+          .where(FieldPath.documentId, isEqualTo: clientId)
+          .limit(1)
+          .get();
+      
+      if (clientsSnapshot.docs.isEmpty) {
+        return []; // Return empty list if client not found
+      }
+      
+      final clientDoc = clientsSnapshot.docs.first;
+      
+      // Now get interactions for this client
+      final interactionsSnapshot = await clientDoc.reference
+          .collection(FirebaseConstants.interactionsCollection)
           .orderBy(FirebaseConstants.createdAtField, descending: true)
           .get();
       
-      return snapshot.docs
+      return interactionsSnapshot.docs
           .map((doc) => InteractionModel.fromJson(doc.data(), doc.id))
           .toList();
     } catch (e) {
-      throw ServerException(e.toString());
+      throw ServerException('Failed to get interactions: $e');
     }
   }
   
   @override
   Future<InteractionModel> addInteraction(InteractionModel interaction) async {
     try {
-      // Find the client to get the userId
-      final clientSnapshot = await firestore
-          .collectionGroup(FirebaseConstants.clientsCollection)
-          .where(FieldPath.documentId, isEqualTo: interaction.clientId)
-          .limit(1)
-          .get();
-      
-      if (clientSnapshot.docs.isEmpty) {
-        throw ServerException('Client not found');
+      final currentUser = auth.currentUser;
+      if (currentUser == null) {
+        throw ServerException('User not authenticated');
       }
       
-      final clientDoc = clientSnapshot.docs.first;
-      final userId = clientDoc.data()[FirebaseConstants.userIdField];
-      
+      // Create the interaction document
       final docRef = await firestore
           .collection(FirebaseConstants.usersCollection)
-          .doc(userId)
+          .doc(currentUser.uid)
           .collection(FirebaseConstants.clientsCollection)
           .doc(interaction.clientId)
           .collection(FirebaseConstants.interactionsCollection)
@@ -61,30 +79,21 @@ class InteractionRemoteDataSourceImpl implements InteractionRemoteDataSource {
       final docSnapshot = await docRef.get();
       return InteractionModel.fromJson(docSnapshot.data()!, docSnapshot.id);
     } catch (e) {
-      throw ServerException(e.toString());
+      throw ServerException('Failed to add interaction: $e');
     }
   }
   
   @override
   Future<InteractionModel> updateInteraction(InteractionModel interaction) async {
     try {
-      // Find the client to get the userId
-      final clientSnapshot = await firestore
-          .collectionGroup(FirebaseConstants.clientsCollection)
-          .where(FieldPath.documentId, isEqualTo: interaction.clientId)
-          .limit(1)
-          .get();
-      
-      if (clientSnapshot.docs.isEmpty) {
-        throw ServerException('Client not found');
+      final currentUser = auth.currentUser;
+      if (currentUser == null) {
+        throw ServerException('User not authenticated');
       }
-      
-      final clientDoc = clientSnapshot.docs.first;
-      final userId = clientDoc.data()[FirebaseConstants.userIdField];
       
       await firestore
           .collection(FirebaseConstants.usersCollection)
-          .doc(userId)
+          .doc(currentUser.uid)
           .collection(FirebaseConstants.clientsCollection)
           .doc(interaction.clientId)
           .collection(FirebaseConstants.interactionsCollection)
@@ -93,28 +102,32 @@ class InteractionRemoteDataSourceImpl implements InteractionRemoteDataSource {
       
       return interaction;
     } catch (e) {
-      throw ServerException(e.toString());
+      throw ServerException('Failed to update interaction: $e');
     }
   }
   
   @override
   Future<void> deleteInteraction(String interactionId) async {
     try {
-      // Find the interaction to get the parent client and user
-      final snapshot = await firestore
+      final currentUser = auth.currentUser;
+      if (currentUser == null) {
+        throw ServerException('User not authenticated');
+      }
+      
+      // Find the interaction document
+      final interactionsSnapshot = await firestore
           .collectionGroup(FirebaseConstants.interactionsCollection)
           .where(FieldPath.documentId, isEqualTo: interactionId)
           .limit(1)
           .get();
       
-      if (snapshot.docs.isEmpty) {
+      if (interactionsSnapshot.docs.isEmpty) {
         throw ServerException('Interaction not found');
       }
       
-      final doc = snapshot.docs.first;
-      await doc.reference.delete();
+      await interactionsSnapshot.docs.first.reference.delete();
     } catch (e) {
-      throw ServerException(e.toString());
+      throw ServerException('Failed to delete interaction: $e');
     }
   }
 }
