@@ -485,10 +485,11 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
               Navigator.of(context).pop();
               final clientProvider = Provider.of<ClientProvider>(context, listen: false);
               clientProvider.deleteClient(_client!.id).then((_) {
-                if (mounted) {
+                
+              });
+              if (mounted) {
                   Navigator.of(context).pop();
                 }
-              });
             },
             child: const Text('Delete'),
           ),

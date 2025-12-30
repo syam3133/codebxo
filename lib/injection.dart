@@ -57,6 +57,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ClientRemoteDataSource>(
     () => ClientRemoteDataSourceImpl(
       firestore: sl(),
+      auth: sl(),
     ),
   );
   

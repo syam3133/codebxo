@@ -119,7 +119,7 @@ class InteractionRemoteDataSourceImpl implements InteractionRemoteDataSource {
     }
 
     await firestore
-    .collection(FirebaseConstants.interactionsCollection)
+    .collection('users')
         .doc(currentUser.uid)
         .collection('clients')
         .doc(clientId)

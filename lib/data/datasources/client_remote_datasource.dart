@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/client_model.dart';
 import '../../../core/errors/exceptions.dart';
 import '../../../core/constants/firebase_constants.dart';
@@ -14,8 +15,10 @@ abstract class ClientRemoteDataSource {
 
 class ClientRemoteDataSourceImpl implements ClientRemoteDataSource {
   final FirebaseFirestore firestore;
+  final FirebaseAuth auth;
+
   
-  ClientRemoteDataSourceImpl({required this.firestore});
+  ClientRemoteDataSourceImpl({required this.firestore, required this.auth});
   
   @override
   Future<List<ClientModel>> getClientList(String userId) async {
@@ -94,31 +97,32 @@ class ClientRemoteDataSourceImpl implements ClientRemoteDataSource {
   
   @override
   Future<void> deleteClient(String clientId) async {
-    try {
-      // Similar to getClientById, we need to find which user owns this client
-      final snapshot = await firestore
-          .collectionGroup(FirebaseConstants.clientsCollection)
-          .where(FieldPath.documentId, isEqualTo: clientId)
-          .limit(1)
-          .get();
-      
-      if (snapshot.docs.isEmpty) {
-        throw ServerException('Client not found');
-      }
-      
-      final doc = snapshot.docs.first;
-      await doc.reference.delete();
-    } catch (e) {
-      throw ServerException(e.toString());
+  try {
+    final currentUser = auth.currentUser;
+
+    if (currentUser == null) {
+      throw ServerException('User not authenticated');
     }
+
+    if (clientId.isEmpty) {
+      throw ServerException('Invalid client id');
+    }
+
+    await firestore
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection(FirebaseConstants.clientsCollection)
+        .doc(clientId)
+        .delete();
+  } catch (e) {
+    throw ServerException('Failed to delete client: $e');
   }
+}
+
   
   @override
   Future<List<ClientModel>> searchClients(String userId, String query) async {
     try {
-      // Firestore doesn't support full-text search natively
-      // For a simple implementation, we'll search by client name
-      // In a real app, you might use Algolia or another search service
       
       final snapshot = await firestore
           .collection(FirebaseConstants.usersCollection)
