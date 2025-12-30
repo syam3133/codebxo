@@ -31,7 +31,7 @@ import 'presentation/providers/auth_provider.dart';
 import 'presentation/providers/client_provider.dart';
 import 'presentation/providers/interaction_provider.dart';
 
-// Remove this problematic import
+
 // import 'package:firebase_auth_platform_interface/src/auth_provider.dart' as firebase_auth_platform;
 
 final sl = GetIt.instance;

@@ -58,7 +58,7 @@ class _AddInteractionScreenState extends State<AddInteractionScreen> {
       final interactionProvider = Provider.of<InteractionProvider>(context, listen: false);
       
       final interaction = Interaction(
-        id: '', // Will be set by the repository
+        id: '', 
         clientId: widget.clientId,
         interactionType: _interactionType,
         notes: _notesController.text.trim().isEmpty

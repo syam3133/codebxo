@@ -7,10 +7,9 @@ import 'presentation/app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Firebase
   await FirebaseService.initialize();
   
-  // Initialize dependency injection
+
   await di.init();
   
   runApp(const App());
