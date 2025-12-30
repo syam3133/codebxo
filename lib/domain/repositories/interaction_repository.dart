@@ -6,5 +6,5 @@ abstract class InteractionRepository {
   Future<Either<Failure, List<Interaction>>> getInteractionList(String clientId);
   Future<Either<Failure, Interaction>> addInteraction(Interaction interaction);
   Future<Either<Failure, Interaction>> updateInteraction(Interaction interaction);
-  Future<Either<Failure, void>> deleteInteraction(String interactionId);
+  Future<Either<Failure, void>> deleteInteraction(String clientId,String interactionId);
 }

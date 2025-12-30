@@ -8,7 +8,7 @@ abstract class InteractionRemoteDataSource {
   Future<List<InteractionModel>> getInteractionList(String clientId);
   Future<InteractionModel> addInteraction(InteractionModel interaction);
   Future<InteractionModel> updateInteraction(InteractionModel interaction);
-  Future<void> deleteInteraction(String interactionId);
+  Future<void> deleteInteraction( String clientId,String interactionId);
 }
 
 class InteractionRemoteDataSourceImpl implements InteractionRemoteDataSource {
@@ -107,27 +107,28 @@ class InteractionRemoteDataSourceImpl implements InteractionRemoteDataSource {
   }
   
   @override
-  Future<void> deleteInteraction(String interactionId) async {
-    try {
-      final currentUser = auth.currentUser;
-      if (currentUser == null) {
-        throw ServerException('User not authenticated');
-      }
-      
-      // Find the interaction document
-      final interactionsSnapshot = await firestore
-          .collectionGroup(FirebaseConstants.interactionsCollection)
-          .where(FieldPath.documentId, isEqualTo: interactionId)
-          .limit(1)
-          .get();
-      
-      if (interactionsSnapshot.docs.isEmpty) {
-        throw ServerException('Interaction not found');
-      }
-      
-      await interactionsSnapshot.docs.first.reference.delete();
-    } catch (e) {
-      throw ServerException('Failed to delete interaction: $e');
+ Future<void> deleteInteraction( String clientId,String interactionId) async {
+  try {
+    final currentUser = auth.currentUser;
+    if (currentUser == null) {
+      throw ServerException('User not authenticated');
     }
+
+    if (interactionId.isEmpty) {
+      throw ServerException('Invalid interaction id');
+    }
+
+    await firestore
+    .collection(FirebaseConstants.interactionsCollection)
+        .doc(currentUser.uid)
+        .collection('clients')
+        .doc(clientId)
+        .collection('interactions')
+        .doc(interactionId)
+        .delete();
+  } catch (e) {
+    throw ServerException('Failed to delete interaction: $e');
   }
+}
+
 }

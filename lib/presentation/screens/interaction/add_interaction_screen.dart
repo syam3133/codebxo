@@ -10,10 +10,14 @@ import '../../widgets/common/message_widget.dart';
 
 class AddInteractionScreen extends StatefulWidget {
   final String clientId;
+  final Interaction? interaction;
+
+  
   
   const AddInteractionScreen({
     Key? key,
     required this.clientId,
+    this.interaction,
   }) : super(key: key);
 
   @override
@@ -55,7 +59,7 @@ class _AddInteractionScreenState extends State<AddInteractionScreen> {
       final interactionProvider = Provider.of<InteractionProvider>(context, listen: false);
       
       final interaction = Interaction(
-        id: '', // Will be set by repository
+        id: '', 
         clientId: widget.clientId,
         interactionType: _interactionType,
         notes: _notesController.text.trim().isEmpty
@@ -75,12 +79,26 @@ class _AddInteractionScreenState extends State<AddInteractionScreen> {
       }
     }
   }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.interaction != null) {
+      _clientReplyController.text = widget.interaction!.clientReply ?? '';
+      _notesController.text = widget.interaction!.notes!;
+      _followUpDate = widget.interaction!.followUpDate ?? DateTime.now();
+      _interactionType = widget.interaction!.interactionType;
+    }
+  }
+
   
   @override
   Widget build(BuildContext context) {
+    final isEdit = widget.interaction != null;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Interaction'),
+        title: Text(isEdit ? 'Edit Interaction' : 'Add Interaction'),
         centerTitle: true,
       ),
       body: Consumer<InteractionProvider>(
@@ -141,8 +159,28 @@ class _AddInteractionScreenState extends State<AddInteractionScreen> {
                   interactionProvider.isLoading
                       ? const LoadingWidget()
                       : CustomButton(
-                          text: 'Save Interaction',
-                          onPressed: _saveInteraction,
+                          text: isEdit ? 'Update Interaction' : 'Save Interaction',
+                          onPressed:() {
+                             final interaction = Interaction(
+                  id: widget.interaction!.id,
+                  clientId: widget.clientId,
+                 clientReply: _clientReplyController.text.trim(),
+                  notes: _notesController.text.trim(),
+                   interactionType: _interactionType, createdAt: widget.interaction!.createdAt,followUpDate: _followUpDate
+                );
+
+                if (isEdit) {
+                   interactionProvider.updateInteraction(interaction);
+                   if (interactionProvider.errorMessage == null) {
+                    Navigator.of(context).pop();
+                  }
+                } else {
+                  // await provider.addInteraction(interaction);
+                  _saveInteraction();
+                  
+                }
+                          },
+                          // onPressed: _saveInteraction,
                         ),
                   if (interactionProvider.errorMessage != null)
                     Padding(

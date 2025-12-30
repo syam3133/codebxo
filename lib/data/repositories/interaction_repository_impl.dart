@@ -67,10 +67,10 @@ class InteractionRepositoryImpl implements InteractionRepository {
   }
   
   @override
-  Future<Either<Failure, void>> deleteInteraction(String interactionId) async {
+  Future<Either<Failure, void>> deleteInteraction(String clientId,String interactionId) async {
     if (await networkInfo.isConnected) {
       try {
-        await remoteDataSource.deleteInteraction(interactionId);
+        await remoteDataSource.deleteInteraction(clientId,interactionId);
         return const Right(null);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));

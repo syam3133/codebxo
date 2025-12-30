@@ -168,7 +168,7 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
             ),
           ).then((_) => _loadInteractions());
         },
-        backgroundColor: Theme.of(context).primaryColor,
+        // backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(Icons.add),
       ),
     );
@@ -422,11 +422,20 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
                     // Show interaction details in a modal or navigate to detail page
                   },
                   onEdit: () {
-                    // Navigate to edit interaction screen
+                    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => AddInteractionScreen(
+          clientId: widget.clientId,
+          interaction: interaction, 
+        ),
+      ),
+    );
                   },
-                  onDelete: () {
-                    _showDeleteInteractionConfirmation(interaction);
-                  },
+                  // onDelete: () {
+                  //   _showDeleteInteractionConfirmation(interaction);
+                  // },
+                  onDelete: () => _confirmDelete(widget.clientId, interaction.id),
                 );
               },
             );
@@ -435,7 +444,31 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
       ],
     );
   }
-  
+
+  Future<void> _confirmDelete(String clientId,String interactionId) async {
+  final confirm = await showDialog<bool>(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: const Text('Delete Interaction'),
+      content: const Text('Are you sure you want to delete this interaction?'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () => Navigator.pop(context, true),
+          child: const Text('Delete'),
+        ),
+      ],
+    ),
+  );
+
+  if (confirm == true) {
+    context.read<InteractionProvider>().deleteInteraction(clientId, interactionId);
+  }
+}
+
   void _showDeleteConfirmation() {
     showDialog(
       context: context,
@@ -479,7 +512,7 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
             onPressed: () {
              Navigator.of(context).pop();
               final interactionProvider = Provider.of<InteractionProvider>(context, listen: false);
-              interactionProvider.deleteInteraction(interaction.id).then((_) {
+              interactionProvider.deleteInteraction(widget.clientId, interaction.id).then((_) {
                 _loadInteractions();
               });
             },

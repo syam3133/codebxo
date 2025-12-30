@@ -1,3 +1,4 @@
+import 'package:field_sales_crm/data/models/interaction_model.dart';
 import 'package:flutter/foundation.dart';
 import '../../domain/entities/interaction.dart';
 import '../../domain/usecases/interaction/get_interaction_list_usecase.dart';
@@ -12,16 +13,16 @@ class InteractionProvider with ChangeNotifier {
   final UpdateInteractionUseCase updateInteractionUseCase;
   final DeleteInteractionUseCase deleteInteractionUseCase;
   
+  List<Interaction> _interactions = [];
+  bool _isLoading = false;
+  String? _errorMessage;
+  
   InteractionProvider({
     required this.getInteractionListUseCase,
     required this.addInteractionUseCase,
     required this.updateInteractionUseCase,
     required this.deleteInteractionUseCase,
   });
-  
-  List<Interaction> _interactions = [];
-  bool _isLoading = false;
-  String? _errorMessage;
   
   List<Interaction> get interactions => _interactions;
   bool get isLoading => _isLoading;
@@ -45,65 +46,61 @@ class InteractionProvider with ChangeNotifier {
   }
   
   Future<void> addInteraction(Interaction interaction) async {
-  _setLoading(true);
-  _clearError();
-  
-  final result = await addInteractionUseCase(interaction);
-  
-  result.fold(
-    (failure) => _setError(failure.message),
-    (addedInteraction) {
-      _interactions.insert(0, addedInteraction);
-      _showSuccessMessage('Interaction added successfully');
-      notifyListeners();
-    },
-  );
-  
-  _setLoading(false);
-}
-  Future<void> updateInteraction(Interaction interaction) async {
     _setLoading(true);
     _clearError();
     
-    final result = await updateInteractionUseCase(interaction);
+    final result = await addInteractionUseCase(interaction);
     
     result.fold(
       (failure) => _setError(failure.message),
-      (updatedInteraction) {
-        final index = _interactions.indexWhere((i) => i.id == updatedInteraction.id);
-        if (index != -1) {
-          _interactions[index] = updatedInteraction;
-          notifyListeners();
-        }
+      (addedInteraction) {
+        _interactions.insert(0, addedInteraction);
+        notifyListeners();
       },
     );
     
     _setLoading(false);
   }
   
-Future<void> deleteInteraction(String interactionId) async {
-  // Remove from local list
-  _interactions.removeWhere((i) => i.id == interactionId);
-  
-  // Also call the repository method
-  final result = await deleteInteractionUseCase(interactionId);
-  
+Future<void> updateInteraction(Interaction interaction) async {
+  _setLoading(true);
+  _clearError();
+
+  final result = await updateInteractionUseCase(interaction);
+
   result.fold(
     (failure) => _setError(failure.message),
     (_) {
-      // Remove from local list
+      final index = _interactions.indexWhere(
+        (i) => i.id == interaction.id,
+      );
+
+      if (index != -1) {
+        _interactions[index] = InteractionModel.fromEntity(interaction);
+        notifyListeners();
+      }
+    },
+  );
+
+  _setLoading(false);
+}
+
+  
+Future<void> deleteInteraction(String clientId,String interactionId) async {
+  _setLoading(true);
+  _clearError();
+
+  final result = await deleteInteractionUseCase(clientId,interactionId);
+
+  result.fold(
+    (failure) => _setError(failure.message),
+    (_) {
       _interactions.removeWhere((i) => i.id == interactionId);
       notifyListeners();
     },
   );
-  
-  _setLoading(false);
-}
 
-  void _showSuccessMessage(String message) {
-  // You can use a callback or a global key to show messages
-  // For now, we'll just print it
-  print('Success: $message');
+  _setLoading(false);
 }
   
   void _setLoading(bool loading) {
