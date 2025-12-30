@@ -94,14 +94,17 @@ users
 
 ## Build Instructions
 
-### Android
+ 
 
 ```bash
+Android
 flutter build apk --release
+
 iOS
 bash
 
 flutter build ios --release
+
 Web
 bash
 
