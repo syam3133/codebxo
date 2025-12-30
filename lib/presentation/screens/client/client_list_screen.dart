@@ -57,20 +57,75 @@ class _ClientListScreenState extends State<ClientListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Clients'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  title: const Text(
+    'Clients',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  actions: [
+    PopupMenuButton<String>(
+      offset: const Offset(0, 50),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      icon: CircleAvatar(
+        radius: 18,
+        backgroundColor: Colors.blue.shade100,
+        child: Text(
+          // userName[0].toUpperCase(), // first letter
+          Provider.of<AuthProvider>(context, listen: false).user!.id.isNotEmpty ? Provider.of<AuthProvider>(context, listen: false).user!.name[0].toUpperCase() : '',
+          style: const TextStyle(
+            color: Colors.blue,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          enabled: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                Provider.of<AuthProvider>(context, listen: false).user!.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                Provider.of<AuthProvider>(context, listen: false).user!.email,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const PopupMenuDivider(),
+        PopupMenuItem(
+          value: 'logout',
+          child: Row(
+            children: const [
+              Icon(Icons.logout, size: 18),
+              SizedBox(width: 8),
+              Text('Logout'),
+            ],
+          ),
+        ),
+      ],
+      onSelected: (value) {
+        if (value == 'logout') {
+         final authProvider = Provider.of<AuthProvider>(context, listen: false);
               authProvider.signOut().then((_) {
                 Navigator.of(context).pushReplacementNamed('/login');
               });
-            },
-          ),
-        ],
-      ),
+        }
+      },
+    ),
+    const SizedBox(width: 12),
+  ],
+),
       body: Consumer2<AuthProvider, ClientProvider>(
         builder: (context, authProvider, clientProvider, child) {
           return Column(
@@ -142,7 +197,8 @@ class _ClientListScreenState extends State<ClientListScreen> {
             ),
           );
         },
-        child: const Icon(Icons.add),
+        backgroundColor: Color(0xFF203A43),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

@@ -30,6 +30,17 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
   Client? _client;
   bool _isLoading = true;
   
+
+   LinearGradient appBarGradient = LinearGradient(
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+  colors: [
+    Color(0xFF0F2027),
+    Color(0xFF203A43),
+    Color(0xFF2C5364),
+  ],
+);
+ 
   @override
   void initState() {
     super.initState();
@@ -103,63 +114,76 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
               child: CircularProgressIndicator(),
             )
           : CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  expandedHeight: 200,
-                  floating: true,
-                  pinned: true,
-                  // flexibleSpace: 20,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                  ),
-                  
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Text(
-                      _client?.clientName ?? 'Client Details',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    titlePadding: const EdgeInsets.only(left: 16),
-                  ),
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.edit, color: Colors.white),
-                      onPressed: () {
-                        if (_client != null) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => EditClientScreen(client: _client!),
-                            ),
-                          ).then((_) => _loadClient());
-                        }
-                      },
-                    ),
-                  ],
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildClientInfo(),
-                        const SizedBox(height: 24),
-                        _buildActionButtons(),
-                        const SizedBox(height: 24),
-                        _buildInteractionSection(),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+  slivers: [
+    SliverAppBar(
+      expandedHeight: 200,
+      floating: true,
+      pinned: true,
+      backgroundColor: Color(0xFF2C5364), 
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+      flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.parallax,
+        titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+        title: Text(
+          _client?.clientName ?? 'Client Details',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        background: Container(
+          decoration:  BoxDecoration(
+            gradient: appBarGradient,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
             ),
+          ),
+        ),
+      ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.edit, color: Colors.white),
+          onPressed: () {
+            if (_client != null) {
+              Navigator.of(context)
+                  .push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditClientScreen(client: _client!),
+                    ),
+                  )
+                  .then((_) => _loadClient());
+            }
+          },
+        ),
+      ],
+    ),
+
+    SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildClientInfo(),
+            const SizedBox(height: 24),
+            _buildActionButtons(),
+            const SizedBox(height: 24),
+            _buildInteractionSection(),
+          ],
+        ),
+      ),
+    ),
+  ],
+),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
@@ -168,8 +192,8 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
             ),
           ).then((_) => _loadInteractions());
         },
-        // backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(Icons.add),
+        backgroundColor: Color(0xFF203A43),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -355,7 +379,7 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
               icon: const Icon(Icons.add),
               label: const Text('Add Interaction'),
               style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).primaryColor,
+                foregroundColor: Color(0xFF203A43),
               ),
             ),
           ],
@@ -419,7 +443,7 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
                 return InteractionItem(
                   interaction: interaction,
                   onTap: () {
-                    // Show interaction details in a modal or navigate to detail page
+                    
                   },
                   onEdit: () {
                     Navigator.push(

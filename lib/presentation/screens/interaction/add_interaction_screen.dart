@@ -161,15 +161,16 @@ class _AddInteractionScreenState extends State<AddInteractionScreen> {
                       : CustomButton(
                           text: isEdit ? 'Update Interaction' : 'Save Interaction',
                           onPressed:() {
-                             final interaction = Interaction(
+                        
+
+                if (isEdit) {
+                       final interaction = Interaction(
                   id: widget.interaction!.id,
                   clientId: widget.clientId,
                  clientReply: _clientReplyController.text.trim(),
                   notes: _notesController.text.trim(),
                    interactionType: _interactionType, createdAt: widget.interaction!.createdAt,followUpDate: _followUpDate
                 );
-
-                if (isEdit) {
                    interactionProvider.updateInteraction(interaction);
                    if (interactionProvider.errorMessage == null) {
                     Navigator.of(context).pop();

@@ -63,11 +63,15 @@ class _SignupScreenState extends State<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Icon(
-                    Icons.business_center,
-                    size: 100,
-                    color: Colors.blue,
+                  CircleAvatar(
+                    radius: 55,
+                    backgroundColor: Colors.transparent,
+                    child: Image.asset(
+                      'assets/icons/app-logo.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
+
                   const SizedBox(height: 20),
                   CustomTextField(
                     controller: _nameController,

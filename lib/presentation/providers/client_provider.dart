@@ -132,9 +132,7 @@ class ClientProvider with ChangeNotifier {
     _setLoading(false);
   }
   
-// Add this method to getClientById if it doesn't exist in the local list:
 Future<Client?> getClientById(String clientId) async {
-  // First check if it's in our local list
   try {
     final client = _clients.firstWhere(
       (c) => c.id == clientId,
@@ -142,7 +140,6 @@ Future<Client?> getClientById(String clientId) async {
     );
     return client;
   } catch (e) {
-    // If not found locally, return null
     return null;
   }
 }
